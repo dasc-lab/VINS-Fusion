@@ -1,0 +1,18 @@
+<launch>
+  <!-- Include the rs_camera.launch file -->
+  <include file="$(find vins)/launch/rs_camera.launch"/>
+
+  <!-- Include the vicon.launch file -->
+  <include file="$(find vicon_bridge)/launch/vicon.launch"/>
+
+  <!-- Run the vins_node with the specified configuration file -->
+  <node pkg="vins" type="vins_node" name="vins_node" output="screen" args="$(find VINS-Fusion)/config/realsense_d435i/realsense_stereo_imu_config.yaml" />
+
+  <!-- Run the loop_fusion_node with the specified configuration file -->
+  <node pkg="loop_fusion" type="loop_fusion_node" name="loop_fusion_node" output="screen" args="$(find VINS-Fusion)/config/realsense_d435i/realsense_stereo_imu_config.yaml" />
+
+  <!-- Run the align.py script from your package with the node name "vicon_vins_listener" -->
+  <node pkg="your_package_name" type="align.py" name="vicon_vins_listener" output="screen" />
+
+</launch>
+
